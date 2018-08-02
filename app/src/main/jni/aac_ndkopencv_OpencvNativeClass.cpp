@@ -18,6 +18,30 @@ JNIEXPORT jint JNICALL Java_aac_ndkopencv_OpencvNativeClass_convertGray
     return retVal;
 
   }
+  
+
+JNIEXPORT void JNICALL Java_aac_ndkopencv_OpencvNativeClass_Open(){
+    processor->setFrameProcessor(getSkin);
+
+}
+
+JNIEXPORT jboolean JNICALL
+        Java_aac_ndkopencv_OpencvNativeClass_ProcessFrame(JNIEnv *env, jobject instance,jlong addrRgba,jstring rpalm_path,jstring fist_path,jstring right_path) {
+
+    Mat& img  = *(Mat*)addrRgba;
+    //LOGI("from c++ xx");
+    /* const char *str_rpalm = env->GetStringUTFChars(rpalm_path, 0);
+     const char *str_fist = env->GetStringUTFChars(fist_path, 0);
+     int ret = getGestureStyle(img,str_rpalm,str_fist);
+
+    LOGI("=====xxx path=%d",ret);*/
+    const char *str_fist = env->GetStringUTFChars(fist_path, 0);
+    const char *str_right = env->GetStringUTFChars(right_path, 0);
+    // LOGI("xxx path=%s",str_rpalm);
+    processor->run(img,str_fist,NULL,NULL);
+    return flag_rpalm;
+
+}
 
 JNIEXPORT void JNICALL Java_aac_ndkopencv_OpencvNativeClass_faceDetection
   (JNIEnv *, jclass, jlong addrRgba){
